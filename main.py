@@ -25,6 +25,8 @@ Active player will also be used to display in the console what player is current
 
 """
 
+from player import Player
+
 
 def func():
     pass
