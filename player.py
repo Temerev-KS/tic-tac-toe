@@ -22,6 +22,9 @@ class Player:
     @staticmethod
     def add_score(self):
         self._victories += 1
+    
+    def show_score(self):
+        return self._victories
 
     def make_move(self):
         pass
