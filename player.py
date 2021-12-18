@@ -2,6 +2,7 @@ class Player:
     def __init__(self):
         self._player_name = None
         self._victories = 0
+        self.figure = None
     
     def __str__(self):
         if self._player_name is None:
@@ -18,6 +19,8 @@ class Player:
     def set_name(self, new_name=None):
         if new_name is not None:
             self._player_name = new_name
+        else:
+            return ValueError('No value for a "new name"')
     
     @staticmethod
     def add_score(self):
