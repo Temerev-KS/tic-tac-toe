@@ -2,6 +2,7 @@ class GameEngine:
     def __init__(self):
         self._players = None
         self._game_going = None
+        self._current_player = None
         self.__state = {
             'a': {1: ' ', 2: ' ', 3: ' '},
             'b': {1: ' ', 2: ' ', 3: ' '},
@@ -20,8 +21,8 @@ class GameEngine:
         
     def init_empty_field(self):
         self.__state = {'a': {1: ' ', 2: ' ', 3: ' '},
-                               'b': {1: ' ', 2: ' ', 3: ' '},
-                               'c': {1: ' ', 2: ' ', 3: ' '}}
+                        'b': {1: ' ', 2: ' ', 3: ' '},
+                        'c': {1: ' ', 2: ' ', 3: ' '}}
         
     def show_state(self):
         print(f'    a   b   c  \n'
@@ -35,7 +36,7 @@ class GameEngine:
     
     def record_move(self, column: str, row: int, value: str):
         """
-        Writes value to __state, in order to store players move.
+        Writes value to __state, in order to store current player move.
         eg. ('a', 2, )
         """
         self.__state[column][row] = value
@@ -51,6 +52,20 @@ class GameEngine:
                 if symbol == get_symbol(*state[1]) and symbol == get_symbol(*state[2]):  # if second and third symbols
                     print('kawabunga')
                     return symbol
+                
+    def change_player(self):
+        for player in self._players:
+            if self._current_player != player:
+                self._current_player = player
+                
+    def result_draw(self):
+        pass
+    
+    def result_victory(self):
+        pass
+    
+    def result_loss(self):
+        pass
     
 
 if __name__ == '__main__':
