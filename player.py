@@ -1,3 +1,7 @@
+from functools import total_ordering
+
+
+@total_ordering
 class Player:
     def __init__(self):
         self._player_name = None
@@ -15,6 +19,12 @@ class Player:
             return 'Undefined Player'
         else:
             return f'Player {self._player_name}'
+    
+    def __lt__(self, other):
+        return self._victories <= other.show_score()
+        
+    def __eq__(self, other):
+        return self._victories == other.show_score()
         
     def set_name(self, new_name=None):
         if new_name is not None:
@@ -22,7 +32,6 @@ class Player:
         else:
             return ValueError('No value for a "new name"')
     
-    @staticmethod
     def add_score(self):
         self._victories += 1
     

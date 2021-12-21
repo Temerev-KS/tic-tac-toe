@@ -1,8 +1,9 @@
 class GameEngine:
     def __init__(self):
-        self._players = None
+        self._players = []
         self._game_going = None
         self._current_player = None
+        self.score_limit = 3
         self.__state = {
             'a': {1: ' ', 2: ' ', 3: ' '},
             'b': {1: ' ', 2: ' ', 3: ' '},
@@ -58,6 +59,20 @@ class GameEngine:
             if self._current_player != player:
                 self._current_player = player
                 
+    def check_player_score(self, player):
+            if player.show_score() == self.score_limit:
+                return True
+    
+    def compare_players_score(self):
+        if self._players[0] > self._players[1]:
+            return self._players[0]
+        
+        elif self._players[0] > self._players[1]:
+            return self._players[1]
+            
+        elif self._players[0] == self._players[1]:
+            self.score_limit += 1
+            
     def result_draw(self):
         pass
     
