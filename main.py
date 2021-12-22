@@ -26,10 +26,12 @@ Active player will also be used to display in the console what player is current
 """
 
 from player import Player
+from game_engine import GameEngine
 
 
 def func():
-    pass
+    engine = GameEngine()
+    pla
 
 
 if __name__ == '__main__':

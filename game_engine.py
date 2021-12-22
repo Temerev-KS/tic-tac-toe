@@ -1,8 +1,11 @@
+from player import Player
+
+
 class GameEngine:
     def __init__(self):
-        self._players = []
+        self._players: [Player] = []
         self._game_going = None
-        self._current_player = None
+        self._current_player: Player | None = None  # TODO: Find out is this the optimal for type hinting None
         self.score_limit = 3
         self.__state = {
             'a': {1: ' ', 2: ' ', 3: ' '},
@@ -35,11 +38,12 @@ class GameEngine:
               f'3 │ {self.__state["a"][3]} │ {self.__state["b"][3]} │ {self.__state["c"][3]} │\n'
               f'  └───┴───┴───┘')
     
-    def record_move(self, column: str, row: int, value: str):
+    def record_move(self, column: str, row: int, value=None):
         """
         Writes value to __state, in order to store current player move.
         eg. ('a', 2, )
         """
+        value = self._current_player.figure if value is None else None
         self.__state[column][row] = value
     
     def check_state(self) -> str:
@@ -60,19 +64,25 @@ class GameEngine:
                 self._current_player = player
                 
     def check_player_score(self, player):
-            if player.show_score() == self.score_limit:
-                return True
+        if player.show_score() == self.score_limit:
+            return True
     
-    def compare_players_score(self):
+    def check_for_winner(self):
         if self._players[0] > self._players[1]:
             return self._players[0]
-        
-        elif self._players[0] > self._players[1]:
+        elif self._players[0] < self._players[1]:
             return self._players[1]
-            
         elif self._players[0] == self._players[1]:
             self.score_limit += 1
+        else:
+            return None
             
+    def ask_for_user_input(self):
+        print(f"{self._current_player.get_name()}, your turn, select the next move")
+        column_move = input('Column name (a, b c):')
+        row_move = input('Row number (1, 2, 3)')
+        return column_move, row_move
+    
     def result_draw(self):
         pass
     
@@ -86,6 +96,7 @@ class GameEngine:
 if __name__ == '__main__':
     engine = GameEngine()
     engine.show_state()
+    
     engine.record_move('a', 1, 'X')
     engine.record_move('a', 2, 'X')
     engine.record_move('a', 3, 'X')
