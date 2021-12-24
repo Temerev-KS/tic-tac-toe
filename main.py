@@ -36,7 +36,6 @@ def func():
     engine.show_state()
     engine.move()
     engine.show_state()
-    # sample change to test github
     
     
 
