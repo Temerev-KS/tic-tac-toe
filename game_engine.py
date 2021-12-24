@@ -5,7 +5,7 @@ class GameEngine:
     def __init__(self):
         self._players: [Player] = []
         self._game_going = None
-        self._current_player: Player | None = None  # TODO: Find out is this the optimal for type hinting None
+        self._current_player: Player | None = None
         self.score_limit = 3
         self.__state = {
             'a': {1: ' ', 2: ' ', 3: ' '},
@@ -38,11 +38,26 @@ class GameEngine:
               f'3 │ {self.__state["a"][3]} │ {self.__state["b"][3]} │ {self.__state["c"][3]} │\n'
               f'  └───┴───┴───┘')
     
+    def init_players(self):
+        player_1 = Player('X')
+        player_2 = Player('O')
+        self._players = [player_1, player_2]
+        
+    def name_players(self):
+        for index, player in enumerate(self._players):
+            user_name = input(f'Enter name for the Player {index + 1}\n')
+            player.set_name(user_name)
+        
+    def change_player(self):
+        for player in self._players:
+            if self._current_player is not player:
+                self._current_player = player
+    
+    def move(self):
+        self.record_move(*self.ask_for_user_input())
+    
     def record_move(self, column: str, row: int, value=None):
-        """
-        Writes value to __state, in order to store current player move.
-        eg. ('a', 2, )
-        """
+        # Writes value to __state, in order to store current player move. eg. ('a', 2, )
         value = self._current_player.figure if value is None else None
         self.__state[column][row] = value
     
@@ -57,11 +72,6 @@ class GameEngine:
                 if symbol == get_symbol(*state[1]) and symbol == get_symbol(*state[2]):  # if second and third symbols
                     print('kawabunga')
                     return symbol
-                
-    def change_player(self):
-        for player in self._players:
-            if self._current_player != player:
-                self._current_player = player
                 
     def check_player_score(self, player):
         if player.show_score() == self.score_limit:
@@ -79,8 +89,8 @@ class GameEngine:
             
     def ask_for_user_input(self):
         print(f"{self._current_player.get_name()}, your turn, select the next move")
-        column_move = input('Column name (a, b c):')
-        row_move = input('Row number (1, 2, 3)')
+        column_move = input('Column name (a, b c): ')
+        row_move = input('Row number (1, 2, 3): ')
         return column_move, row_move
     
     def result_draw(self):

@@ -3,16 +3,16 @@ from functools import total_ordering
 
 @total_ordering
 class Player:
-    def __init__(self):
+    def __init__(self, fig=None):
         self._player_name = None
         self._victories = 0
-        self.figure = None
+        self.figure = fig if fig is not None else None
     
     def __str__(self):
         if self._player_name is None:
             return 'Undefined Player'
         else:
-            return f'Player {self._player_name}'
+            return f'Player {self._player_name}, Score: {self._victories}.'
         
     def __repr__(self):
         if self._player_name is None:
@@ -40,10 +40,6 @@ class Player:
     
     def show_score(self):
         return self._victories
-
-    def make_move(self):
-        pass
-        # TODO: figure out if this method is needed at all here
     
 
 if __name__ == '__main__':

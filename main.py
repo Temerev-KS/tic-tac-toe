@@ -19,9 +19,6 @@ Player will have to enter the row and column ID to make a move (similar to a che
 Wen player makes a move - we change 'ACTIVE PLAYER' variable that will define witch number and character to store.
 Active player will also be used to display in the console what player is currently making a move.
 
-# TODO: create basic functions
-# TODO: find characters that better than 0 or o to display te game state
-# TODO: write more todo items
 
 """
 
@@ -31,8 +28,20 @@ from game_engine import GameEngine
 
 def func():
     engine = GameEngine()
-    pla
-
+    # player_1 = Player()
+    # player_1.set_name('Ner\'zhul')
+    # player_2 = Player()
+    # player_2.set_name('Thrall')
+    # print(player_1)
+    # print(player_2)
+    engine.init_players()
+    engine.name_players()
+    engine.change_player()
+    engine.show_state()
+    engine.move()
+    engine.show_state()
+    
+    
 
 if __name__ == '__main__':
     func()
