@@ -49,10 +49,11 @@ class GameEngine:
             player.set_name(user_name)
         
     def change_player(self):
-        for player in self._players:
-            if self._current_player is not player:
-                self._current_player = player
-    
+        if self._current_player is self._players[0]:
+            self._current_player = self._players[1]
+        else:
+            self._current_player = self._players[0]
+        
     def move(self):
         self.record_move(*self.ask_for_user_input())
     
@@ -89,9 +90,9 @@ class GameEngine:
             
     def ask_for_user_input(self):
         print(f"{self._current_player.get_name()}, your turn, select the next move")
-        column_move = input('Column name (a, b c): ')
-        row_move = input('Row number (1, 2, 3): ')
-        return column_move, row_move
+        column_address = input('Column name (a, b c): ')
+        row_address = int(input('Row number (1, 2, 3): '))
+        return column_address, row_address
     
     def result_draw(self):
         pass

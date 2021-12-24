@@ -28,15 +28,11 @@ from game_engine import GameEngine
 
 def func():
     engine = GameEngine()
-    # player_1 = Player()
-    # player_1.set_name('Ner\'zhul')
-    # player_2 = Player()
-    # player_2.set_name('Thrall')
-    # print(player_1)
-    # print(player_2)
     engine.init_players()
     engine.name_players()
     engine.change_player()
+    engine.show_state()
+    engine.move()
     engine.show_state()
     engine.move()
     engine.show_state()
@@ -44,4 +40,16 @@ def func():
     
 
 if __name__ == '__main__':
-    func()
+    # func()
+    engine = GameEngine()
+    engine.init_players()
+    engine.name_players()
+    engine.change_player()
+    engine.show_state()
+    engine.move()
+    engine.show_state()
+    engine.change_player()
+    engine.move()
+    engine.show_state()
+
+    
