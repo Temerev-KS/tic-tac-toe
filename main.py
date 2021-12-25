@@ -44,12 +44,15 @@ if __name__ == '__main__':
     engine = GameEngine()
     engine.init_players()
     engine.name_players()
-    engine.change_player()
-    engine.show_state()
-    engine.move()
-    engine.show_state()
-    engine.change_player()
-    engine.move()
-    engine.show_state()
+    while not engine.check_for_winner():
+        while not engine.check_state():
+            engine.change_player()
+            engine.show_state()
+            engine.move()
+        
+
+    # engine.change_player()
+    # engine.move()
+    # engine.show_state()
 
     

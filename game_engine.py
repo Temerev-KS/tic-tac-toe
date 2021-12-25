@@ -8,34 +8,34 @@ class GameEngine:
         self._current_player: Player | None = None
         self.score_limit = 3
         self.__state = {
-            'a': {1: ' ', 2: ' ', 3: ' '},
-            'b': {1: ' ', 2: ' ', 3: ' '},
-            'c': {1: ' ', 2: ' ', 3: ' '}
+            'a': {'1': ' ', '2': ' ', '3': ' '},
+            'b': {'1': ' ', '2': ' ', '3': ' '},
+            'c': {'1': ' ', '2': ' ', '3': ' '}
         }
         self.__winning_states = [
-            (('a', 1), ('a', 2), ('a', 3)), 
-            (('b', 1), ('b', 2), ('b', 3)), 
-            (('c', 1), ('c', 2), ('c', 3)), 
-            (('a', 1), ('b', 1), ('c', 1)), 
-            (('a', 2), ('b', 2), ('c', 2)), 
-            (('a', 3), ('b', 3), ('c', 3)), 
-            (('a', 1), ('b', 2), ('c', 3)),
-            (('a', 3), ('b', 2), ('c', 1)),
+            (('a', '1'), ('a', '2'), ('a', '3')),
+            (('b', '1'), ('b', '2'), ('b', '3')),
+            (('c', '1'), ('c', '2'), ('c', '3')),
+            (('a', '1'), ('b', '1'), ('c', '1')),
+            (('a', '2'), ('b', '2'), ('c', '2')),
+            (('a', '3'), ('b', '3'), ('c', '3')),
+            (('a', '1'), ('b', '2'), ('c', '3')),
+            (('a', '3'), ('b', '2'), ('c', '1')),
         ]
         
     def init_empty_field(self):
-        self.__state = {'a': {1: ' ', 2: ' ', 3: ' '},
-                        'b': {1: ' ', 2: ' ', 3: ' '},
-                        'c': {1: ' ', 2: ' ', 3: ' '}}
+        self.__state = {'a': {'1': ' ', '2': ' ', '3': ' '},
+                        'b': {'1': ' ', '2': ' ', '3': ' '},
+                        'c': {'1': ' ', '2': ' ', '3': ' '}}
         
     def show_state(self):
         print(f'    a   b   c  \n'
               f'  ┌───┬───┬───┐\n'
-              f'1 │ {self.__state["a"][1]} │ {self.__state["b"][1]} │ {self.__state["c"][1]} │\n'
+              f'1 │ {self.__state["a"]["1"]} │ {self.__state["b"]["1"]} │ {self.__state["c"]["1"]} │\n'
               f'  ├───┼───┼───┤\n'
-              f'2 │ {self.__state["a"][2]} │ {self.__state["b"][2]} │ {self.__state["c"][2]} │\n'
+              f'2 │ {self.__state["a"]["2"]} │ {self.__state["b"]["2"]} │ {self.__state["c"]["2"]} │\n'
               f'  ├───┼───┼───┤\n'
-              f'3 │ {self.__state["a"][3]} │ {self.__state["b"][3]} │ {self.__state["c"][3]} │\n'
+              f'3 │ {self.__state["a"]["3"]} │ {self.__state["b"]["3"]} │ {self.__state["c"]["3"]} │\n'
               f'  └───┴───┴───┘')
     
     def init_players(self):
@@ -57,7 +57,7 @@ class GameEngine:
     def move(self):
         self.record_move(*self.ask_for_user_input())
     
-    def record_move(self, column: str, row: int, value=None):
+    def record_move(self, column: str, row: str, value=None):
         # Writes value to __state, in order to store current player move. eg. ('a', 2, )
         value = self._current_player.figure if value is None else None
         self.__state[column][row] = value
@@ -91,14 +91,20 @@ class GameEngine:
     def ask_for_user_input(self):
         print(f"{self._current_player.get_name()}, your turn, select the next move")
         column_address = input('Column name (a, b c): ')
-        row_address = int(input('Row number (1, 2, 3): '))
+        while column_address not in self.__state.keys():
+            column_address = input('Invalid column name, please enter correct one  (E.g - a, b, c): ')
+        row_address = input('Row number (1, 2, 3): ')
+        while row_address not in self.__state['a'].keys():
+            row_address = input('Invalid row number, please enter correct one  (E.g - 1, 2, 3): ')
         return column_address, row_address
     
-    def result_draw(self):
-        pass
+    @staticmethod
+    def result_draw():
+        print("Draw")
     
-    def result_victory(self):
-        pass
+    @staticmethod
+    def result_victory(winner):
+        print(f'Player {winner}')
     
     def result_loss(self):
         pass
@@ -108,8 +114,8 @@ if __name__ == '__main__':
     engine = GameEngine()
     engine.show_state()
     
-    engine.record_move('a', 1, 'X')
-    engine.record_move('a', 2, 'X')
-    engine.record_move('a', 3, 'X')
+    engine.record_move('a', '1', 'X')
+    engine.record_move('a', '2', 'X')
+    engine.record_move('a', '3', 'X')
     engine.show_state()
     engine.check_state()
