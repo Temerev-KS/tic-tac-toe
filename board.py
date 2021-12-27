@@ -20,9 +20,11 @@ class Board:
         return self.__winning_combinations
         
     def empty(self):
-        self.__state = {'a': {'1': ' ', '2': ' ', '3': ' '},
-                        'b': {'1': ' ', '2': ' ', '3': ' '},
-                        'c': {'1': ' ', '2': ' ', '3': ' '}}
+        self.__state = {
+            'a': {'1': ' ', '2': ' ', '3': ' '},
+            'b': {'1': ' ', '2': ' ', '3': ' '},
+            'c': {'1': ' ', '2': ' ', '3': ' '}
+        }
     
     def get_formatted_state(self):
         formatted_state = str(f'    a   b   c  \n'
