@@ -13,7 +13,6 @@ if __name__ == '__main__':
         while engine.check_for_winner():
             while not engine.check_winning_combo_present():
                 engine.change_player()
-                engine.show_board()
                 engine.move()
             engine._board.empty()
         engine.repeat_game_input()

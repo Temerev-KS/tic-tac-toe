@@ -1,5 +1,12 @@
 from player import Player
 from board import Board
+import os
+
+
+# TODO: Mechanism to see if all cells have been used up, but nobody won.
+# TODO: Mechanism to increase player score
+# TODO: Mechanism to show who have won
+# TODO: Mechanism to clear the console output and display only current action and the logo
 
 
 class GameEngine:
@@ -28,10 +35,14 @@ class GameEngine:
     @staticmethod
     def show_logo():
         with open('logo', mode='r') as lg:
-            askii_logo = lg.read()
-        print(askii_logo)
+            ascii_logo = lg.read()
+        print(ascii_logo)
         
     # def reset_board
+    
+    @staticmethod
+    def clear_terminal():
+        os.system('cls' if os.name == 'nt' else 'clear')
         
     def name_players(self):
         for index, player in enumerate(self._players):
@@ -45,12 +56,17 @@ class GameEngine:
             self._current_player = self._players[0]
         
     def move(self):
-        self._board.write_cell(
-            *self.ask_for_user_input(),
-            value=self._current_player.figure
-        )
+        self.show_board()
+        print(f"\n{self._current_player.get_figure()}'s: {self._current_player.get_name()}, your turn, enter the next move")
+        cell_address = self.ask_for_user_input()
+        while self._board.cell_not_empty_check(*cell_address):
+            self.show_board()
+            print(f'\nSorry sell {cell_address} is not empty, please select a different one')
+            cell_address = self.ask_for_user_input()
+        self._board.write_cell(*cell_address, value=self._current_player.figure)
     
     def show_board(self):
+        self.clear_terminal()
         print(self._board.get_formatted_state())
         
     def check_winning_combo_present(self) -> str | None:
@@ -82,11 +98,11 @@ class GameEngine:
             return None
             
     def ask_for_user_input(self):
-        print(f"{self._current_player.get_name()}, your turn, select the next move")
-        column_address = input('Column name (a, b c): ')
+        
+        column_address = input('Enter column name (a, b c): ')
         while column_address not in self._board.get_state().keys():
             column_address = input('Invalid column name, please enter correct one  (E.g - a, b, c): ')
-        row_address = input('Row number (1, 2, 3): ')
+        row_address = input('Enter row number (1, 2, 3): ')
         while row_address not in self._board.get_state()['a'].keys():
             row_address = input('Invalid row number, please enter correct one  (E.g - 1, 2, 3): ')
         return column_address, row_address

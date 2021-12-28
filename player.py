@@ -32,6 +32,9 @@ class Player:
         else:
             return ValueError('No value for a "new name"')
     
+    def get_figure(self):
+        return self.figure
+    
     def get_name(self):
         return self._player_name
     
