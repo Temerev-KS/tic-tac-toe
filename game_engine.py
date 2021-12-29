@@ -21,16 +21,16 @@ class GameEngine:
         return self._game_on
     
     def set_game_off(self):
-        self._game_on == False
+        self._game_on = False
     
     def repeat_game_input(self):
         repeat_decision = input('Do you you want to play again? \n(press Y or N keys)\n').lower()
         while repeat_decision != 'y' or repeat_decision != 'n':
             repeat_decision = input('Invalid input: please press "Y" key to play again or "N" key to exit\n').lower()
         if repeat_decision == 'y':
-            self._game_on == True
+            self._game_on = True
         elif repeat_decision == 'n':
-            self._game_on == False
+            self._game_on = False
     
     @staticmethod
     def show_logo():
@@ -57,7 +57,8 @@ class GameEngine:
         
     def move(self):
         self.show_board()
-        print(f"\n{self._current_player.get_figure()}'s: {self._current_player.get_name()}, your turn, enter the next move")
+        print(f"\n{self._current_player.get_figure()}'s: "
+              f"{self._current_player.get_name()}, your turn, enter the next move")
         cell_address = self.ask_for_user_input()
         while self._board.cell_not_empty_check(*cell_address):
             self.show_board()
@@ -67,6 +68,7 @@ class GameEngine:
     
     def show_board(self):
         self.clear_terminal()
+        self.show_logo()
         print(self._board.get_formatted_state())
         
     def check_winning_combo_present(self) -> str | None:
@@ -76,7 +78,7 @@ class GameEngine:
                 cell_1 = self._board.get_cell_value(*combo[1])
                 cell_2 = self._board.get_cell_value(*combo[2])
                 if cell_0 == cell_1 and cell_1 == cell_2:
-                    print('#################### kawabunga ####################')
+                    print('#################### VICTORY ####################')
                     return cell_0
                 
     def report_round_winner(self,):
@@ -116,6 +118,5 @@ class GameEngine:
         print(f'Player {winner}')
 
     
-
 if __name__ == '__main__':
     pass
