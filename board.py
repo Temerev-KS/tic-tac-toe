@@ -29,15 +29,15 @@ class Board:
         self.__cells_left = 9
    
     def get_formatted_state(self):
-        formatted_state = str(f'     a     b     c  \n'
-                              f'  ┌─────┬─────┬─────┐\n'
-                              f'1 │  {self.__state["a"]["1"]}  │  {self.__state["b"]["1"]}  │  {self.__state["c"]["1"]}  │\n'
-                              f'  ├─────┼─────┼─────┤\n'
-                              f'2 │  {self.__state["a"]["2"]}  │  {self.__state["b"]["2"]}  │  {self.__state["c"]["2"]}  │\n'
-                              f'  ├─────┼─────┼─────┤\n'
-                              f'3 │  {self.__state["a"]["3"]}  │  {self.__state["b"]["3"]}  │  {self.__state["c"]["3"]}  │\n'
-                              f'  └─────┴─────┴─────┘')
-        return formatted_state
+        pretty_state = (f'     a     b     c  \n'
+                        f'  ┌─────┬─────┬─────┐\n'
+                        f'1 │  {self.__state["a"]["1"]}  │  {self.__state["b"]["1"]}  │  {self.__state["c"]["1"]}  │\n'
+                        f'  ├─────┼─────┼─────┤\n'
+                        f'2 │  {self.__state["a"]["2"]}  │  {self.__state["b"]["2"]}  │  {self.__state["c"]["2"]}  │\n'
+                        f'  ├─────┼─────┼─────┤\n'
+                        f'3 │  {self.__state["a"]["3"]}  │  {self.__state["b"]["3"]}  │  {self.__state["c"]["3"]}  │\n'
+                        f'  └─────┴─────┴─────┘')
+        return pretty_state
     
     def get_state(self):
         return self.__state
