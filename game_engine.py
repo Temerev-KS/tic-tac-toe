@@ -3,10 +3,8 @@ from board import Board
 import os
 
 
-# TODO: Mechanism to see if all cells have been used up, but nobody won.
 # TODO: Mechanism to increase player score
 # TODO: Mechanism to show who have won
-# TODO: Mechanism to clear the console output and display only current action and the logo
 
 
 class GameEngine:
@@ -38,7 +36,11 @@ class GameEngine:
             ascii_logo = lg.read()
         print(ascii_logo)
         
-    # def reset_board
+    def display_players_score(self):
+        print(f'Score:\n'
+              f'{self._players[0].get_name()} - {self._players[0].show_score()}  |  '
+              f'{self._players[1].get_name()} - {self._players[1].show_score()}'
+              f'\n')
     
     @staticmethod
     def clear_terminal():
@@ -69,6 +71,7 @@ class GameEngine:
     def show_board(self):
         self.clear_terminal()
         self.show_logo()
+        self.display_players_score()
         print(self._board.get_formatted_state())
         
     def check_winning_combo_present(self) -> str | None:
@@ -80,7 +83,10 @@ class GameEngine:
                 if cell_0 == cell_1 and cell_1 == cell_2:
                     print('#################### VICTORY ####################')
                     return cell_0
-                
+
+    def board_has_empty_cells(self):
+        return True if self._board.get_empty_cells_count() >= 1 else False
+        
     def report_round_winner(self,):
         pass
 
@@ -109,9 +115,10 @@ class GameEngine:
             row_address = input('Invalid row number, please enter correct one  (E.g - 1, 2, 3): ')
         return column_address, row_address
     
-    @staticmethod
-    def result_draw():
-        print("Draw")
+    def result_draw(self):
+        self._board.empty()
+        print("\nDraw!")
+        input('\nPress Enter Key to continue:')
     
     @staticmethod
     def result_victory(winner):

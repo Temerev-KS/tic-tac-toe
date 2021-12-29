@@ -15,6 +15,7 @@ class Board:
             (('a', '1'), ('b', '2'), ('c', '3')),  # Diagonal
             (('a', '3'), ('b', '2'), ('c', '1')),  # Diagonal
         ]
+        self.__cells_left = 9
     
     def winning_combinations(self):
         return self.__winning_combinations
@@ -25,7 +26,8 @@ class Board:
             'b': {'1': ' ', '2': ' ', '3': ' '},
             'c': {'1': ' ', '2': ' ', '3': ' '}
         }
-    
+        self.__cells_left = 9
+   
     def get_formatted_state(self):
         formatted_state = str(f'     a     b     c  \n'
                               f'  ┌─────┬─────┬─────┐\n'
@@ -45,10 +47,13 @@ class Board:
     
     def write_cell(self, column: str, row: str, value: str):
         self.__state[column][row] = value
+        self.__cells_left -= 1
     
     def cell_not_empty_check(self, column, row) -> bool:  # True if cell is occupied
         if self.__state[column][row] == ' ' or self.__state[column][row] is None:
             return False
         else:
             return True
-
+    
+    def get_empty_cells_count(self):
+        return self.__cells_left
