@@ -3,10 +3,6 @@ from board import Board
 import os
 
 
-# TODO: Mechanism to increase player score
-# TODO: Mechanism to show who have won
-
-
 class GameEngine:
     def __init__(self):
         self._players: [Player] = [Player('X'), Player('O')]
@@ -38,8 +34,8 @@ class GameEngine:
         
     def display_players_score(self):
         print(f'Score:\n'
-              f'{self._players[0].get_name()} - {self._players[0].show_score()}  |  '
-              f'{self._players[1].get_name()} - {self._players[1].show_score()}'
+              f'{self._players[0].get_name()} : {self._players[0].show_score()}  |  '
+              f'{self._players[1].get_name()} : {self._players[1].show_score()}'
               f'\n')
     
     @staticmethod
@@ -74,15 +70,15 @@ class GameEngine:
         self.display_players_score()
         print(self._board.get_formatted_state())
         
-    def check_winning_combo_present(self) -> str | None:
+    def check_winning_combo_present(self) -> bool | None:
         for combo in self._board.winning_combinations():
             if self._board.cell_not_empty_check(*combo[0]):
                 cell_0 = self._board.get_cell_value(*combo[0])
                 cell_1 = self._board.get_cell_value(*combo[1])
                 cell_2 = self._board.get_cell_value(*combo[2])
                 if cell_0 == cell_1 and cell_1 == cell_2:
-                    print('#################### VICTORY ####################')
-                    return cell_0
+                    self.result_victory()
+                    return True
 
     def board_has_empty_cells(self):
         return True if self._board.get_empty_cells_count() >= 1 else False
@@ -99,9 +95,6 @@ class GameEngine:
             return self._players[0]
         elif self._players[0] < self._players[1]:
             return self._players[1]
-        elif self._players[0] == self._players[1]:
-            self._score_limit += 1
-            return 'draw'
         else:
             return None
             
@@ -118,11 +111,13 @@ class GameEngine:
     def result_draw(self):
         self._board.empty()
         print("\nDraw!")
-        input('\nPress Enter Key to continue:')
+        input('\nPress "Enter" to continue: ')
     
-    @staticmethod
-    def result_victory(winner):
-        print(f'Player {winner}')
+    def result_victory(self):
+        self._current_player.add_score()
+        self._board.empty()
+        print(f'\nPlayer {self._current_player} is victorious!')
+        input('\nPress "Enter" to continue: ')
 
     
 if __name__ == '__main__':
