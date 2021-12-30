@@ -2,6 +2,14 @@ from player import Player
 from board import Board
 import os
 
+# TODO: Player name cant be "" or None
+# TODO: Column named row number errors print must clear console
+# TODO: Player ames cnt be the sme
+# TODO: X's and O's must displayed in error messages
+# TODO: Score limit is broken (5 instead of 3)
+# TODO: After victory of all round - ask to continue, wipe scores and or players
+# TODO: A ton of refactoring
+
 
 class GameEngine:
     def __init__(self):
