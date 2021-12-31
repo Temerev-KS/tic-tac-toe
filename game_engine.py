@@ -1,8 +1,6 @@
 from player import Player
 from board import Board
 import os
-
-# TODO: Player name cant be "" or None
 # TODO: Column named row number errors print must clear console
 # TODO: Player ames cnt be the sme
 # TODO: X's and O's must displayed in error messages
@@ -53,6 +51,11 @@ class GameEngine:
     def name_players(self):
         for index, player in enumerate(self._players):
             user_name = input(f'Enter name for the Player {index + 1}\n')
+            while user_name == '':
+                self.clear_terminal()
+                self.show_logo()
+                user_name = input(f'You entered nothing!\n'
+                                  f'Please enter name for the Player {index + 1}\n')
             player.set_name(user_name)
         
     def change_player(self):

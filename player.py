@@ -30,7 +30,7 @@ class Player:
         if new_name is not None:
             self._player_name = new_name
         else:
-            return ValueError('No value for a "new name"')
+            return ValueError('No value for the new_name in set name')
     
     def get_figure(self):
         return self.figure
