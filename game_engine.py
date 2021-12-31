@@ -2,11 +2,13 @@ from player import Player
 from board import Board
 import os
 # TODO: Column named row number errors print must clear console
+# TODO: SELECTED Column named row must be visible after error message
 # TODO: Player ames cnt be the sme
 # TODO: X's and O's must displayed in error messages
 # TODO: Score limit is broken (5 instead of 3)
 # TODO: After victory of all round - ask to continue, wipe scores and or players
-# TODO: A ton of refactoring
+# TODO: Think about passing Current message thru self and use just one short function to print that message
+# TODO: A ton of refactoring (+ standardise function and variable naming)
 
 
 class GameEngine:
@@ -66,8 +68,7 @@ class GameEngine:
         
     def move(self):
         self.show_board()
-        print(f"\n{self._current_player.get_figure()}'s: "
-              f"{self._current_player.get_name()}, your turn, enter the next move")
+        print(f"\nEnter the next move")
         cell_address = self.ask_for_user_input()
         while self._board.cell_not_empty_check(*cell_address):
             self.show_board()
@@ -80,6 +81,7 @@ class GameEngine:
         self.show_logo()
         self.display_players_score()
         print(self._board.get_formatted_state())
+        print(f"\n{self._current_player.get_figure()}'s: {self._current_player.get_name()}")
         
     def check_winning_combo_present(self) -> bool | None:
         for combo in self._board.winning_combinations():
@@ -110,12 +112,13 @@ class GameEngine:
             return None
             
     def ask_for_user_input(self):
-        
         column_address = input('Enter column name (a, b c): ')
         while column_address not in self._board.get_state().keys():
+            self.show_board()
             column_address = input('Invalid column name, please enter correct one  (E.g - a, b, c): ')
         row_address = input('Enter row number (1, 2, 3): ')
         while row_address not in self._board.get_state()['a'].keys():
+            self.show_board()
             row_address = input('Invalid row number, please enter correct one  (E.g - 1, 2, 3): ')
         return column_address, row_address
     
