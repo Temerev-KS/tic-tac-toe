@@ -1,8 +1,6 @@
 from player import Player
 from board import Board
 import os
-# TODO: Column named row number errors print must clear console
-# TODO: SELECTED Column named row must be visible after error message
 # TODO: Player ames cnt be the sme
 # TODO: X's and O's must displayed in error messages
 # TODO: Score limit is broken (5 instead of 3)
@@ -119,6 +117,7 @@ class GameEngine:
         row_address = input('Enter row number (1, 2, 3): ')
         while row_address not in self._board.get_state()['a'].keys():
             self.show_board()
+            print(f'Selected column is "{column_address}"')
             row_address = input('Invalid row number, please enter correct one  (E.g - 1, 2, 3): ')
         return column_address, row_address
     
