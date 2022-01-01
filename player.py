@@ -44,6 +44,9 @@ class Player:
     def show_score(self):
         return self._victories
     
+    def reset_score(self):
+        self._victories = 0
+    
 
 if __name__ == '__main__':
     pass

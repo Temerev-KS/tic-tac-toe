@@ -1,10 +1,6 @@
 from player import Player
 from board import Board
 import os
-# TODO: Player ames cnt be the sme
-# TODO: X's and O's must displayed in error messages
-# TODO: Score limit is broken (5 instead of 3)
-# TODO: After victory of all round - ask to continue, wipe scores and or players
 # TODO: Think about passing Current message thru self and use just one short function to print that message
 # TODO: A ton of refactoring (+ standardise function and variable naming)
 
@@ -24,12 +20,18 @@ class GameEngine:
         self._game_on = False
     
     def repeat_game_input(self):
-        repeat_decision = input('Do you you want to play again? \n(press Y or N keys)\n').lower()
-        while repeat_decision != 'y' or repeat_decision != 'n':
-            repeat_decision = input('Invalid input: please press "Y" key to play again or "N" key to exit\n').lower()
-        if repeat_decision == 'y':
+        repeat_decision = str(input('Do you you want to play again? \n(press Y or N keys)\n').capitalize())
+        print(repeat_decision)
+        print(ord(repeat_decision))
+        while repeat_decision not in ('Y', 'N'):
+            print(f'Right ord = {ord("Y")}')
+            repeat_decision = str(input('Invalid input: please press "Y" key to play again or "N" key to exit\n').capitalize())
+            print(repeat_decision)
+            print(ord(repeat_decision))
+        if repeat_decision == 'Y':
             self._game_on = True
-        elif repeat_decision == 'n':
+            self.reset_game()
+        elif repeat_decision == 'N':
             self._game_on = False
     
     @staticmethod
@@ -47,7 +49,13 @@ class GameEngine:
     @staticmethod
     def clear_terminal():
         os.system('cls' if os.name == 'nt' else 'clear')
-        
+    
+    def reset_game(self):
+        self._board.empty()
+        self._score_limit = 3
+        for player in self._players:
+            player.reset_score()
+    
     def name_players(self):
         for index, player in enumerate(self._players):
             user_name = input(f'Enter name for the Player {index + 1}\n')
@@ -101,13 +109,20 @@ class GameEngine:
         if player.show_score() == self._score_limit:
             return True
     
+    # def check_for_winner(self):
+    #     if self._players[0] > self._players[1]:
+    #         return self._players[0]
+    #     elif self._players[0] < self._players[1]:
+    #         return self._players[1]
+    #     else:
+    #         return None
     def check_for_winner(self):
-        if self._players[0] > self._players[1]:
-            return self._players[0]
-        elif self._players[0] < self._players[1]:
-            return self._players[1]
-        else:
-            return None
+        if self._players[0] == self._players[1]:
+            self._score_limit += 1
+        elif self._current_player is not None:
+            if self._current_player.show_score() >= self._score_limit:
+                self.game_winner()
+                return True
             
     def ask_for_user_input(self):
         column_address = input('Enter column name (a, b c): ')
@@ -129,8 +144,13 @@ class GameEngine:
     def result_victory(self):
         self._current_player.add_score()
         self._board.empty()
-        print(f'\nPlayer {self._current_player} is victorious!')
+        print(f'\nPlayer {self._current_player.get_name()} is victorious!')
         input('\nPress "Enter" to continue: ')
+    
+    def game_winner(self):
+        self._current_player.add_score()
+        self._board.empty()
+        print(f'\nPlayer {self._current_player.get_name()} won the game!')
 
     
 if __name__ == '__main__':
