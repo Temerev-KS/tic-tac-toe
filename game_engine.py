@@ -105,12 +105,17 @@ class GameEngine:
         return True if self._board.get_empty_cells_count() >= 1 else False
     
     def game_winner_check(self):
-        if self._players[0] == self._players[1]:
+        if self._players[0] == self._players[1] and self._players[0].show_score() == self._score_limit:
             self._score_limit += 1
-        elif self._current_player is not None:
+            return False
+        elif self._current_player is not None:  # None is the state at the beginning of the game
             if self._current_player.show_score() >= self._score_limit:
                 self.game_winner()
                 return True
+            else:
+                return False
+        else:
+            return False
             
     def ask_for_user_input(self):
         # User must enter cell address as column name and row number in order to make a move
@@ -137,8 +142,6 @@ class GameEngine:
         input('\nPress "Enter" to continue: ')
     
     def game_winner(self):
-        self._current_player.add_score()
-        self._board.empty()
         print(f'\nPlayer {self._current_player.get_name()} won the game!')
 
     
