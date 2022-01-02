@@ -92,7 +92,7 @@ class GameEngine:
             self.show_board()
             print(f'\nSorry sell {cell_address} is not empty, please select a different one')
             cell_address = self.ask_for_user_input()
-        self._board.write_cell(*cell_address, value=self._current_player.figure)
+        self._board.write_cell(*cell_address, value=self._current_player._figure)
     
     def show_board(self):
         self.clear_terminal()

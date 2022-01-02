@@ -6,7 +6,7 @@ class Player:
     def __init__(self, fig=None):
         self._player_name = None
         self._victories = 0
-        self.figure = fig if fig is not None else None
+        self._figure = fig if fig is not None else None
     
     def __str__(self):
         if self._player_name is None:
@@ -33,7 +33,7 @@ class Player:
             return ValueError('No value for the new_name in set name')
     
     def get_figure(self):
-        return self.figure
+        return self._figure
     
     def get_name(self):
         return self._player_name
