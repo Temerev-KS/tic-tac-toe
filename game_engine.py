@@ -13,6 +13,18 @@ class GameEngine:
         self._current_player: Player | None = None
         self._score_limit = 3
     
+    def game_loop(self):
+        while self.is_game_on():
+            while not self.check_for_winner():
+                while not self.check_winning_combo_present():
+                    if self.board_has_empty_cells():
+                        self.change_player()
+                        self.move()
+                    else:
+                        self.result_draw()
+            self.repeat_game_input()
+        print('Good by!')
+    
     def is_game_on(self):
         return self._game_on
     
@@ -109,13 +121,6 @@ class GameEngine:
         if player.show_score() == self._score_limit:
             return True
     
-    # def check_for_winner(self):
-    #     if self._players[0] > self._players[1]:
-    #         return self._players[0]
-    #     elif self._players[0] < self._players[1]:
-    #         return self._players[1]
-    #     else:
-    #         return None
     def check_for_winner(self):
         if self._players[0] == self._players[1]:
             self._score_limit += 1
