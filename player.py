@@ -19,33 +19,33 @@ class Player:
             return 'Undefined Player'
         else:
             return f'Player {self._player_name}'
-    
-    def __lt__(self, other):
-        return self._victories <= other.show_score()
-        
+
     def __eq__(self, other):
         return self._victories == other.show_score()
+
+    def __lt__(self, other):
+        return self._victories <= other.show_score()
+
+    def add_score(self):
+        self._victories += 1
         
-    def set_name(self, new_name=None):
-        if new_name is not None:
-            self._player_name = new_name
-        else:
-            return ValueError('No value for the new_name in set name')
-    
     def get_figure(self):
         return self._figure
     
     def get_name(self):
         return self._player_name
     
-    def add_score(self):
-        self._victories += 1
+    def reset_score(self):
+        self._victories = 0
+    
+    def set_name(self, new_name=None):
+        if new_name is not None:
+            self._player_name = new_name
+        else:
+            return ValueError('No value for the new_name in set name')
     
     def show_score(self):
         return self._victories
-    
-    def reset_score(self):
-        self._victories = 0
     
 
 if __name__ == '__main__':

@@ -17,8 +17,11 @@ class Board:
         ]
         self._cells_left = 9
     
-    def winning_combinations(self):
-        return self._winning_combinations
+    def cell_not_empty_check(self, column, row) -> bool:  # True if cell is occupied
+        if self._state[column][row] == ' ' or self._state[column][row] is None:
+            return False
+        else:
+            return True
         
     def empty(self):
         self._state = {
@@ -27,6 +30,12 @@ class Board:
             'c': {'1': ' ', '2': ' ', '3': ' '}
         }
         self._cells_left = 9
+
+    def get_cell_value(self, column, row) -> str | None:
+        return self._state[column][row]
+
+    def get_empty_cells_count(self):
+        return self._cells_left
    
     def get_formatted_state(self):
         pretty_state = (f'     a     b     c  \n'
@@ -41,19 +50,14 @@ class Board:
     
     def get_state(self):
         return self._state
-    
-    def get_cell_value(self, column, row) -> str | None:
-        return self._state[column][row]
-    
+
     def write_cell(self, column: str, row: str, value: str):
         self._state[column][row] = value
         self._cells_left -= 1
+
+    def winning_combinations(self):
+        return self._winning_combinations
     
-    def cell_not_empty_check(self, column, row) -> bool:  # True if cell is occupied
-        if self._state[column][row] == ' ' or self._state[column][row] is None:
-            return False
-        else:
-            return True
-    
-    def get_empty_cells_count(self):
-        return self._cells_left
+
+if __name__ == '__main__':
+    pass

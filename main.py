@@ -4,7 +4,7 @@ from game_engine import GameEngine
 def play_tic_tac_toe():
     engine = GameEngine()
     engine.clear_terminal()  # Clears everything from the console
-    engine.show_logo()  # Decorative logo at the top
+    engine.display_logo()  # Decorative logo at the top
     engine.name_players()  # Ask users to enter their names
     engine.game_loop()  # Run the main loop responsible for the game
 
