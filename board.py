@@ -18,15 +18,14 @@ class Board:
         self._cells_left = 9  # Keeps track of empty cells (max 9 min 0)
     
     def cell_not_empty_check(self, column, row) -> bool:
+        """False if cell is empty, True if cell is occupied"""
         if self._state[column][row] == ' ' or self._state[column][row] is None:
-            # False if cell is empty
             return False
         else:
-            # True if cell is occupied
             return True
         
-    def empty(self):
-        # Reset board to the initial state
+    def reset(self):
+        """Reset board to the initial state"""
         self._state = {
             'a': {'1': ' ', '2': ' ', '3': ' '},
             'b': {'1': ' ', '2': ' ', '3': ' '},
@@ -35,36 +34,48 @@ class Board:
         self._cells_left = 9
 
     def get_cell_value(self, column, row) -> str | None:
-        #  value of the cell at specified coordinates
+        """Returns value of the cell at specified coordinates"""
         return self._state[column][row]
 
     def get_empty_cells_count(self) -> int:
-        # Getter _cells_left
+        """Getter of empty cells counter (_cells_left)"""
         return self._cells_left
    
     def get_formatted_state(self) -> str:
-        # Formatted grid of cells that looks more or less like square
-        pretty_state = (f'     a     b     c  \n'
-                        f'  ┌─────┬─────┬─────┐\n'
-                        f'1 │  {self._state["a"]["1"]}  │  {self._state["b"]["1"]}  │  {self._state["c"]["1"]}  │\n'
-                        f'  ├─────┼─────┼─────┤\n'
-                        f'2 │  {self._state["a"]["2"]}  │  {self._state["b"]["2"]}  │  {self._state["c"]["2"]}  │\n'
-                        f'  ├─────┼─────┼─────┤\n'
-                        f'3 │  {self._state["a"]["3"]}  │  {self._state["b"]["3"]}  │  {self._state["c"]["3"]}  │\n'
-                        f'  └─────┴─────┴─────┘')
+        """
+        Getter of formatted grid of cells with values that looks more or less like square
+             a     b     c
+          ┌─────┬─────┬─────┐
+        1 │     │     │  0  │
+          ├─────┼─────┼─────┤
+        2 │     │  X  │     │
+          ├─────┼─────┼─────┤
+        3 │     │     │     │
+          └─────┴─────┴─────┘
+        """
+        pretty_state = (
+            f'     a     b     c  \n'
+            f'  ┌─────┬─────┬─────┐\n'
+            f'1 │  {self._state["a"]["1"]}  │  {self._state["b"]["1"]}  │  {self._state["c"]["1"]}  │\n'
+            f'  ├─────┼─────┼─────┤\n'
+            f'2 │  {self._state["a"]["2"]}  │  {self._state["b"]["2"]}  │  {self._state["c"]["2"]}  │\n'
+            f'  ├─────┼─────┼─────┤\n'
+            f'3 │  {self._state["a"]["3"]}  │  {self._state["b"]["3"]}  │  {self._state["c"]["3"]}  │\n'
+            f'  └─────┴─────┴─────┘'
+        )
         return pretty_state
     
     def get_state(self) -> dict:
-        # Getter of raw not formatted grid values (_state)
+        """Getter of raw grid values"""
         return self._state
 
     def write_cell(self, column: str, row: str, value: str):
-        # Sets value of specified cell with provided value, reduces counter of empty cells by 1
+        """Sets value of specified cell with provided value, reduces counter of empty cells by 1"""
         self._state[column][row] = value
         self._cells_left -= 1
 
     def winning_combinations(self) -> [dict]:
-        # getter of _winning_combinations
+        """Getter of _winning_combinations list"""
         return self._winning_combinations
     
 

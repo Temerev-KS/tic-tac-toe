@@ -65,16 +65,16 @@ class GameEngine:
     
     def display_players_score(self):
         print(f'Score:\n'
-              f'{self._players[0].get_name()} : {self._players[0].show_score()}  |  '
-              f'{self._players[1].get_name()} : {self._players[1].show_score()}'
+              f'{self._players[0].get_name()} : {self._players[0].get_score()}  |  '
+              f'{self._players[1].get_name()} : {self._players[1].get_score()}'
               f'\n')
 
     def game_winner_check(self):
-        if self._players[0] == self._players[1] and self._players[0].show_score() == self._score_limit:
+        if self._players[0] == self._players[1] and self._players[0].get_score() == self._score_limit:
             self._score_limit += 1
             return False
         elif self._current_player is not None:  # None is the state at the beginning of the game
-            if self._current_player.show_score() >= self._score_limit:
+            if self._current_player.get_score() >= self._score_limit:
                 self.game_winner()
                 return True
             else:
@@ -100,7 +100,7 @@ class GameEngine:
     
     def reset_game(self):
         #  Reset everything to the default but keeps the name of the players
-        self._board.empty()
+        self._board.reset()
         self._score_limit = 3
         for player in self._players:
             player.reset_score()
@@ -126,13 +126,13 @@ class GameEngine:
             player.set_name(user_name)
 
     def round_result_draw(self):
-        self._board.empty()
+        self._board.reset()
         print("\nDraw!")
         input('\nPress "Enter" to continue: ')
         
     def round_result_victory(self):
         self._current_player.add_score()
-        self._board.empty()
+        self._board.reset()
         print(f'\nPlayer {self._current_player.get_name()} is victorious!')
         input('\nPress "Enter" to continue: ')
         
